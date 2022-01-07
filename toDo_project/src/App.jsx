@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import {v4 as uuidv4} from 'uuid'
+import React, { useState } from 'react';
+import {v4 as uuidv4} from 'uuid';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Tasks from './components/tasks';
 import AddTask from './components/addTask';
+import TaskDetails from './components/taskdetails';
 import './App.css'
 
 const App = () => {
@@ -46,17 +48,22 @@ const App = () => {
   };
 
   return (
-    <>
+    <Router>
       <div className="container">
         <h1 className="title">To-Do</h1>
-        <AddTask handleTaskAdd={handleTaskAdd} />
-        <Tasks
-          tasks={tasks}
-          handleTaskClick={handleTaskClick}
-          handleTaskDel={handleTaskDel}
-        />
+        <Route path="/" exact render={() => (
+          <>
+            <AddTask handleTaskAdd={handleTaskAdd} />
+            <Tasks
+              tasks={tasks}
+              handleTaskClick={handleTaskClick}
+              handleTaskDel={handleTaskDel}
+            />
+          </>
+        )}/>
+        <Route path="/:taskTitle" exact render={TaskDetails} />
       </div>
-    </>
+    </Router>
   );
 };
 
